@@ -42,8 +42,7 @@ RCT_EXPORT_MODULE(RNPerthWebServer);
 }
 
 
-RCT_EXPORT_METHOD(perth_root:(NSString *)root
-                  perth_port: (NSInteger)port
+RCT_EXPORT_METHOD(perth_port: (NSString *)port
                   perth_sec: (NSString *)aSec
                   perth_path: (NSString *)aPath
                   perth_localOnly:(BOOL)localOnly
@@ -56,9 +55,12 @@ RCT_EXPORT_METHOD(perth_root:(NSString *)root
         return;
     }
     
-    NSInteger apPort = port;
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber * apPort = [f numberFromString:port];
+
     [perth_pServ addHandlerWithMatchBlock:^GCDWebServerRequest * _Nullable(NSString * _Nonnull method, NSURL * _Nonnull requestURL, NSDictionary<NSString *,NSString *> * _Nonnull requestHeaders, NSString * _Nonnull urlPath, NSDictionary<NSString *,NSString *> * _Nonnull urlQuery) {
-        NSString *pResString = [requestURL.absoluteString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@%zd/",aPath, apPort] withString:@""];
+        NSString *pResString = [requestURL.absoluteString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@%@/",aPath, apPort] withString:@""];
         return [[GCDWebServerRequest alloc] initWithMethod:method
                                                        url:[NSURL URLWithString:pResString]
                                                    headers:requestHeaders
@@ -87,7 +89,7 @@ RCT_EXPORT_METHOD(perth_root:(NSString *)root
     NSError *error;
     NSMutableDictionary* options = [NSMutableDictionary dictionary];
     
-    [options setObject:@(apPort) forKey:GCDWebServerOption_Port];
+    [options setObject:apPort forKey:GCDWebServerOption_Port];
 
     if (localOnly == YES) {
         [options setObject:@(YES) forKey:GCDWebServerOption_BindToLocalhost];
@@ -99,7 +101,7 @@ RCT_EXPORT_METHOD(perth_root:(NSString *)root
     }
 
     if([perth_pServ startWithOptions:options error:&error]) {
-        apPort = perth_pServ.port;
+        apPort = [NSNumber numberWithUnsignedInteger:perth_pServ.port];
         if(perth_pServ.serverURL == NULL) {
             reject(@"server_error", @"server could not start", error);
         } else {
@@ -137,3 +139,4 @@ RCT_EXPORT_METHOD(perth_isRunning:(RCTPromiseResolveBlock)resolve perth_rejecter
 }
 
 @end
+

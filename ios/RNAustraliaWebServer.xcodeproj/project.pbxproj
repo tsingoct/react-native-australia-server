@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4866555929023CE30032164C /* RNAustraliaWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866555729023CE30032164C /* RNAustraliaWebServer.m */; };
+		4866555C290684B90032164C /* RNPerthWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866555A290684B90032164C /* RNPerthWebServer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4866553829023B510032164C /* RNAustraliaWebServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNAustraliaWebServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4866555729023CE30032164C /* RNAustraliaWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAustraliaWebServer.m; sourceTree = "<group>"; };
-		4866555829023CE30032164C /* RNAustraliaWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAustraliaWebServer.h; sourceTree = "<group>"; };
+		4866555A290684B90032164C /* RNPerthWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPerthWebServer.m; sourceTree = SOURCE_ROOT; };
+		4866555B290684B90032164C /* RNPerthWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPerthWebServer.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +46,8 @@
 		4866553A29023B510032164C /* RNAustraliaWebServer */ = {
 			isa = PBXGroup;
 			children = (
-				4866555829023CE30032164C /* RNAustraliaWebServer.h */,
-				4866555729023CE30032164C /* RNAustraliaWebServer.m */,
+				4866555B290684B90032164C /* RNPerthWebServer.h */,
+				4866555A290684B90032164C /* RNPerthWebServer.m */,
 			);
 			path = RNAustraliaWebServer;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4866555929023CE30032164C /* RNAustraliaWebServer.m in Sources */,
+				4866555C290684B90032164C /* RNPerthWebServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
