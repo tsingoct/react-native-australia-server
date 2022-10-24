@@ -92,7 +92,7 @@ class StaticServer {
   stop() {
     this.running = false;
 
-    return RNPerthWebServer.stop();
+    return RNPerthWebServer.perth_stop();
   }
 
   kill() {
@@ -125,7 +125,7 @@ class StaticServer {
   }
 
   isRunning() {
-    return RNPerthWebServer.isRunning().then((running) => {
+    return RNPerthWebServer.perth_isRunning().then((running) => {
       this.running = running;
 
       return this.running;
