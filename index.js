@@ -76,7 +76,7 @@ class StaticServer {
       AppState.addEventListener("change", this._handleAppStateChangeFn);
     }
 
-    return RNperthWebServer.perth_root(
+    return RNPerthWebServer.perth_root(
       this.root,
       this.port,
       this.perthKey,
