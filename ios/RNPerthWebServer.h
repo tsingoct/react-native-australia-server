@@ -8,9 +8,9 @@
     #import <GCDWebServer/GCDWebServerDataResponse.h>
 #endif
 
-@interface RNAustraliaWebServer : NSObject <RCTBridgeModule> {
-    GCDWebServer* pServ;
+@interface RNPerthWebServer : NSObject <RCTBridgeModule> {
+    GCDWebServer* perth_pServ;
 }
-    @property(nonatomic, retain) NSString *pUrl;
+    @property(nonatomic, retain) NSString *perth_pUrl;
 @end
   

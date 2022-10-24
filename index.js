@@ -1,6 +1,6 @@
 import { NativeModules, AppState, Platform } from "react-native";
 
-const { RNAustraliaWebServer } = NativeModules;
+const { RNPerthWebServer } = NativeModules;
 
 const PORT = "";
 const ROOT = null;
@@ -13,8 +13,8 @@ class StaticServer {
         this.root = root || ROOT;
         this.localOnly = (opts && opts.localOnly) || false;
         this.keepAlive = (opts && opts.keepAlive) || false;
-        this.australiaKey = opts && opts.australiaKey;
-        this.australiaPath = opts && opts.australiaPath;
+        this.perthKey = opts && opts.perthKey;
+        this.perthPath = opts && opts.perthPath;
         break;
       case 2:
         this.port = `${port}`;
@@ -22,16 +22,15 @@ class StaticServer {
           this.root = root;
           this.localOnly = false;
           this.keepAlive = false;
-          this.australiaKey = "";
-          this.australiaPath = "";
+          this.perthKey = "";
+          this.perthPath = "";
         } else {
           this.root = ROOT;
           this.localOnly = (arguments[1] && arguments[1].localOnly) || false;
           this.keepAlive = (arguments[1] && arguments[1].keepAlive) || false;
 
-          this.australiaKey = (arguments[1] && arguments[1].australiaKey) || "";
-          this.australiaPath =
-            (arguments[1] && arguments[1].australiaPath) || "";
+          this.perthKey = (arguments[1] && arguments[1].perthKey) || "";
+          this.perthPath = (arguments[1] && arguments[1].perthPath) || "";
         }
         break;
       case 1:
@@ -40,16 +39,15 @@ class StaticServer {
           this.root = ROOT;
           this.localOnly = false;
           this.keepAlive = false;
-          this.australiaKey = "";
-          this.australiaPath = "";
+          this.perthKey = "";
+          this.perthPath = "";
         } else {
           this.port = PORT;
           this.root = ROOT;
           this.localOnly = (arguments[0] && arguments[0].localOnly) || false;
           this.keepAlive = (arguments[0] && arguments[0].keepAlive) || false;
-          this.australiaKey = (arguments[0] && arguments[0].australiaKey) || "";
-          this.australiaPath =
-            (arguments[0] && arguments[0].australiaPath) || "";
+          this.perthKey = (arguments[0] && arguments[0].perthKey) || "";
+          this.perthPath = (arguments[0] && arguments[0].perthPath) || "";
         }
         break;
       default:
@@ -57,8 +55,8 @@ class StaticServer {
         this.root = ROOT;
         this.localOnly = false;
         this.keepAlive = false;
-        this.australiaKey = "";
-        this.australiaPath = "";
+        this.perthKey = "";
+        this.perthPath = "";
     }
 
     this.started = false;
@@ -78,11 +76,11 @@ class StaticServer {
       AppState.addEventListener("change", this._handleAppStateChangeFn);
     }
 
-    return RNAustraliaWebServer.start(
+    return RNperthWebServer.perth_root(
       this.root,
       this.port,
-      this.australiaKey,
-      this.australiaPath,
+      this.perthKey,
+      this.perthPath,
       this.localOnly,
       this.keepAlive
     ).then((origin) => {
@@ -94,7 +92,7 @@ class StaticServer {
   stop() {
     this.running = false;
 
-    return RNAustraliaWebServer.stop();
+    return RNPerthWebServer.stop();
   }
 
   kill() {
@@ -127,7 +125,7 @@ class StaticServer {
   }
 
   isRunning() {
-    return RNAustraliaWebServer.isRunning().then((running) => {
+    return RNPerthWebServer.isRunning().then((running) => {
       this.running = running;
 
       return this.running;
