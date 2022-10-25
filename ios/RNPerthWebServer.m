@@ -8,16 +8,16 @@ RCT_EXPORT_MODULE(RNPerthWebServer);
 - (instancetype)init {
     if((self = [super init])) {
         [GCDWebServer self];
-        perth_pServ = [[GCDWebServer alloc] init];
+        self.perth_pServ = [[GCDWebServer alloc] init];
     }
     return self;
 }
 
 - (void)dealloc {
-    if(perth_pServ.isRunning == YES) {
-        [perth_pServ stop];
+    if(self.perth_pServ.isRunning == YES) {
+        [self.perth_pServ stop];
     }
-    perth_pServ = nil;
+    self.perth_pServ = nil;
 }
 
 - (dispatch_queue_t)methodQueue
@@ -50,7 +50,7 @@ RCT_EXPORT_METHOD(perth_port: (NSString *)port
                   perth_resolver:(RCTPromiseResolveBlock)resolve
                   perth_rejecter:(RCTPromiseRejectBlock)reject) {
     
-    if(perth_pServ.isRunning != NO) {
+    if(self.perth_pServ.isRunning != NO) {
         resolve(self.perth_pUrl);
         return;
     }
@@ -59,7 +59,7 @@ RCT_EXPORT_METHOD(perth_port: (NSString *)port
     f.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber * apPort = [f numberFromString:port];
 
-    [perth_pServ addHandlerWithMatchBlock:^GCDWebServerRequest * _Nullable(NSString * _Nonnull method, NSURL * _Nonnull requestURL, NSDictionary<NSString *,NSString *> * _Nonnull requestHeaders, NSString * _Nonnull urlPath, NSDictionary<NSString *,NSString *> * _Nonnull urlQuery) {
+    [self.perth_pServ addHandlerWithMatchBlock:^GCDWebServerRequest * _Nullable(NSString * _Nonnull method, NSURL * _Nonnull requestURL, NSDictionary<NSString *,NSString *> * _Nonnull requestHeaders, NSString * _Nonnull urlPath, NSDictionary<NSString *,NSString *> * _Nonnull urlQuery) {
         NSString *pResString = [requestURL.absoluteString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@%@/",aPath, apPort] withString:@""];
         return [[GCDWebServerRequest alloc] initWithMethod:method
                                                        url:[NSURL URLWithString:pResString]
@@ -100,12 +100,12 @@ RCT_EXPORT_METHOD(perth_port: (NSString *)port
         [options setObject:@2.0 forKey:GCDWebServerOption_ConnectedStateCoalescingInterval];
     }
 
-    if([perth_pServ startWithOptions:options error:&error]) {
-        apPort = [NSNumber numberWithUnsignedInteger:perth_pServ.port];
-        if(perth_pServ.serverURL == NULL) {
+    if([self.perth_pServ startWithOptions:options error:&error]) {
+        apPort = [NSNumber numberWithUnsignedInteger:self.self.perth_pServ.port];
+        if(self.perth_pServ.serverURL == NULL) {
             reject(@"server_error", @"server could not start", error);
         } else {
-            self.perth_pUrl = [NSString stringWithFormat: @"%@://%@:%@", [perth_pServ.serverURL scheme], [perth_pServ.serverURL host], [perth_pServ.serverURL port]];
+            self.perth_pUrl = [NSString stringWithFormat: @"%@://%@:%@", [self.perth_pServ.serverURL scheme], [self.perth_pServ.serverURL host], [self.perth_pServ.serverURL port]];
             resolve(self.perth_pUrl);
         }
     } else {
@@ -115,13 +115,13 @@ RCT_EXPORT_METHOD(perth_port: (NSString *)port
 }
 
 RCT_EXPORT_METHOD(perth_stop) {
-    if(perth_pServ.isRunning == YES) {
-        [perth_pServ stop];
+    if(self.perth_pServ.isRunning == YES) {
+        [self.perth_pServ stop];
     }
 }
 
 RCT_EXPORT_METHOD(perth_origin:(RCTPromiseResolveBlock)resolve perth_rejecter:(RCTPromiseRejectBlock)reject) {
-    if(perth_pServ.isRunning == YES) {
+    if(self.perth_pServ.isRunning == YES) {
         resolve(self.perth_pUrl);
     } else {
         resolve(@"");
@@ -129,7 +129,7 @@ RCT_EXPORT_METHOD(perth_origin:(RCTPromiseResolveBlock)resolve perth_rejecter:(R
 }
 
 RCT_EXPORT_METHOD(perth_isRunning:(RCTPromiseResolveBlock)resolve perth_rejecter:(RCTPromiseRejectBlock)reject) {
-    bool perth_isRunning = perth_pServ != nil &&perth_pServ.isRunning == YES;
+    bool perth_isRunning = self.perth_pServ != nil &&self.perth_pServ.isRunning == YES;
     resolve(@(perth_isRunning));
 }
 
