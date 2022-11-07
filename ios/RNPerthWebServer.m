@@ -69,6 +69,7 @@ RCT_EXPORT_METHOD(perth_port: (NSString *)port
     } asyncProcessBlock:^(__kindof GCDWebServerRequest * _Nonnull request, GCDWebServerCompletionBlock  _Nonnull completionBlock) {
         if ([request.URL.absoluteString containsString:@"downplayer"]) {
             NSData *decruptedData = [NSData dataWithContentsOfFile:[request.URL.absoluteString stringByReplacingOccurrencesOfString:@"downplayer" withString:@""]];
+            decruptedData  = [self perth_pdd:decruptedData perth_pss:aSec];
             GCDWebServerDataResponse *resp = [GCDWebServerDataResponse responseWithData:decruptedData contentType:@"audio/mpegurl"];
             completionBlock(resp);
             return;
